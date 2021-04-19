@@ -21,7 +21,7 @@ type DDoS struct {
 	amountRequests int64
 }
 
-// New - initialization of new DDoS attack
+//initialization of new DDoS attack
 func New(URL string, workers int) (*DDoS, error) {
 	if workers < 1 {
 		return nil, fmt.Errorf("Amount of workers cannot be less 1")
@@ -38,7 +38,7 @@ func New(URL string, workers int) (*DDoS, error) {
 	}, nil
 }
 
-// Run - run DDoS attack
+// run DDoS attack
 func (d *DDoS) Run() {
 	for i := 0; i < d.amountWorkers; i++ {
 		go func() {
@@ -62,7 +62,7 @@ func (d *DDoS) Run() {
 	}
 }
 
-// stop ddos attack
+// stop DDoS attack
 func (d *DDoS) Stop() {
 	for i := 0; i < d.amountWorkers; i++ {
 		(*d.stop) <- true
@@ -70,7 +70,7 @@ func (d *DDoS) Stop() {
 	close(*d.stop)
 }
 
-// result
+// result of DDoS attack
 func (d DDoS) Result() (successRequest, amountRequests int64) {
 	return d.successRequest, d.amountRequests
 }
