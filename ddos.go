@@ -62,5 +62,15 @@ func (d *DDoS) Run() {
 	}
 }
 
+// stop ddos attack
+func (d *DDoS) Stop() {
+	for i := 0; i < d.amountWorkers; i++ {
+		(*d.stop) <- true
+	}
+	close(*d.stop)
+}
 
-
+// result
+func (d DDoS) Result() (successRequest, amountRequests int64) {
+	return d.successRequest, d.amountRequests
+}
