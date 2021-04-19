@@ -10,7 +10,6 @@ import (
 
 	ddos "github.com/krishpranav/ddos"
 	freeport "github.com/Konstantin8105/FreePort"
-
 )
 
 func TestNewDDoS(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 )
 
-// ddos structure
+//structure of value for DDoS attack
 type DDoS struct {
 	url           string
 	stop          *chan bool
@@ -38,7 +38,7 @@ func New(URL string, workers int) (*DDoS, error) {
 	}, nil
 }
 
-// run DDoS attack
+//run DDoS attack
 func (d *DDoS) Run() {
 	for i := 0; i < d.amountWorkers; i++ {
 		go func() {
@@ -62,7 +62,7 @@ func (d *DDoS) Run() {
 	}
 }
 
-// stop DDoS attack
+//stop DDoS attack
 func (d *DDoS) Stop() {
 	for i := 0; i < d.amountWorkers; i++ {
 		(*d.stop) <- true
@@ -70,7 +70,7 @@ func (d *DDoS) Stop() {
 	close(*d.stop)
 }
 
-// result of DDoS attack
+//result of DDoS attack
 func (d DDoS) Result() (successRequest, amountRequests int64) {
 	return d.successRequest, d.amountRequests
 }
