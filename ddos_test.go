@@ -47,11 +47,11 @@ func TestDDoS(t *testing.T) {
 	t.Logf("Statistic: %d %d", success, amount)
 }
 
-// create a simple go server
+// Create a simple go server
 func createServer(port int, t *testing.T) {
 	go func() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			fmt.Fprintf(w, "Hi there %s!", r.URL.Path[1:])
+			fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 		})
 		if err := http.ListenAndServe(":"+strconv.Itoa(port), nil); err != nil {
 			t.Fatalf("Server is down. %v", err)
@@ -66,3 +66,23 @@ func TestWorkers(t *testing.T) {
 	}
 }
 
+func TestUrl(t *testing.T) {
+	_, err := ddos.New("some_strange_host", 1)
+	if err == nil {
+		t.Error("Cannot create a new ddos structure")
+	}
+}
+
+func ExampleNew() {
+	workers := 1000
+	d, err := ddos.New("http://127.0.0.1:80", workers)
+	if err != nil {
+		panic(err)
+	}
+	d.Run()
+	time.Sleep(time.Second)
+	d.Stop()
+	fmt.Fprintf(os.Stdout, "DDoS attack server: http://127.0.0.1:80\n")
+	// Output:
+	// DDoS attack server: http://127.0.0.1:80
+}
